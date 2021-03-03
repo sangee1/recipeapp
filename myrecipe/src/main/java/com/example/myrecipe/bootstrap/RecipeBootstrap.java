@@ -54,13 +54,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		sandwichRecipe.setUrl(null);
 		Set<Ingredient> ing = new HashSet<>();
 	
-		ing.add(new Ingredient("Bread",new BigDecimal(2),uomRepo.findByDescription("slices").get()));
+		ing.add(new Ingredient("Bread",new BigDecimal(2),uomRepo.findByDescription("slices").get(),sandwichRecipe));
 
-		ing.add(new Ingredient("Tomatoes",new BigDecimal(3),uomRepo.findByDescription("slices").get()));
-		ing.add(new Ingredient("Onions",new BigDecimal(3),uomRepo.findByDescription("slices").get()));
-		ing.add(new Ingredient("Cucmbers",new BigDecimal(3),uomRepo.findByDescription("slices").get()));
-		ing.add(new Ingredient("Mayonnaise",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get()));
+		ing.add(new Ingredient("Tomatoes",new BigDecimal(3),uomRepo.findByDescription("slices").get(),sandwichRecipe));
+		ing.add(new Ingredient("Onions",new BigDecimal(3),uomRepo.findByDescription("slices").get(),sandwichRecipe));
+		ing.add(new Ingredient("Cucmbers",new BigDecimal(3),uomRepo.findByDescription("slices").get(),sandwichRecipe));
+		ing.add(new Ingredient("Mayonnaise",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get(),sandwichRecipe));
 		sandwichRecipe.setIngredients(ing);
+		
 		
 		Recipe pakodaRecipe = new Recipe();
 		pakodaRecipe.getCategories().add(categoryRepo.findByDescription("Indian").get());
@@ -80,12 +81,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		pakodaRecipe.setSource(null);
 		pakodaRecipe.setUrl(null);
 		Set<Ingredient> ing1=new HashSet<>();
-		ing1.add(new Ingredient("Besan",new BigDecimal(4),uomRepo.findByDescription("Tablespoon").get()));
-		ing1.add(new Ingredient("Rice flour",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get()));
-		ing1.add(new Ingredient("Chilli powder",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get()));
-		ing1.add(new Ingredient("Salt",new BigDecimal(13),uomRepo.findByDescription("Teaspoon").get()));
-		ing1.add(new Ingredient("Onion",new BigDecimal(4),uomRepo.findByDescription("slices").get()));
+		ing1.add(new Ingredient("Besan",new BigDecimal(4),uomRepo.findByDescription("Tablespoon").get(),pakodaRecipe));
+		ing1.add(new Ingredient("Rice flour",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get(),pakodaRecipe));
+		ing1.add(new Ingredient("Chilli powder",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get(),pakodaRecipe));
+		ing1.add(new Ingredient("Salt",new BigDecimal(13),uomRepo.findByDescription("Teaspoon").get(),pakodaRecipe));
+		ing1.add(new Ingredient("Onion",new BigDecimal(4),uomRepo.findByDescription("slices").get(),pakodaRecipe));
 		pakodaRecipe.setIngredients(ing1);
+		
 		
 		recipeList.add(sandwichRecipe);
 		recipeList.add(pakodaRecipe);
