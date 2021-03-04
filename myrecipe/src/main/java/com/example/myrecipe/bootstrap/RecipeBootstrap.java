@@ -49,9 +49,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		sandwichNotes.setRecipeNotes("Be creative.Experiment with different veggie combos n dressings");
 		sandwichRecipe.setNotes(sandwichNotes);
 		sandwichRecipe.setPrepTime(5);
-		sandwichRecipe.setServings(null);
-		sandwichRecipe.setSource(null);
-		sandwichRecipe.setUrl(null);
+		sandwichRecipe.setServings(2);
+		sandwichRecipe.setSource("My own cooking experience");
+		sandwichRecipe.setUrl("https://www.google.co.in");
 		Set<Ingredient> ing = new HashSet<>();
 	
 		ing.add(new Ingredient("Bread",new BigDecimal(2),uomRepo.findByDescription("slices").get(),sandwichRecipe));
@@ -77,9 +77,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		sandwichNotes.setRecipeNotes("Be creative.Experiment with different veggie combos n dressings");
 		pakodaRecipe.setNotes(pakodaNotes);
 		pakodaRecipe.setPrepTime(5);
-		pakodaRecipe.setServings(null);
-		pakodaRecipe.setSource(null);
-		pakodaRecipe.setUrl(null);
+		pakodaRecipe.setServings(3);
+		pakodaRecipe.setSource("My cooking");
+		pakodaRecipe.setUrl("www.takeiteasy.com");
 		Set<Ingredient> ing1=new HashSet<>();
 		ing1.add(new Ingredient("Besan",new BigDecimal(4),uomRepo.findByDescription("Tablespoon").get(),pakodaRecipe));
 		ing1.add(new Ingredient("Rice flour",new BigDecimal(2),uomRepo.findByDescription("Tablespoon").get(),pakodaRecipe));

@@ -1,6 +1,7 @@
 package com.example.myrecipe.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,16 @@ public class RecipeServiceImpl implements RecipeService {
 		Set<Recipe> result = new HashSet<>();
 		recipeRepo.findAll().iterator().forEachRemaining(result::add);
 		return result;
+	}
+
+
+	public Recipe findById(long l) {
+		// TODO Auto-generated method stub
+		Optional<Recipe> recipeOptional = recipeRepo.findById(l);
+		if(!recipeOptional.isPresent())
+			throw new RuntimeException("No recipe found!");
+		return recipeOptional.get();
+		
 	}
 
 }

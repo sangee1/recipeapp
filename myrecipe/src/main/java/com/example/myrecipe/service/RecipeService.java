@@ -7,5 +7,6 @@ import com.example.myrecipe.domain.Recipe;
 public interface RecipeService {
 	
 	Set<Recipe> getRecipes();
+	Recipe findById(long l);
 
 }
