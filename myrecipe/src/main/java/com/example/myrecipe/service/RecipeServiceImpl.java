@@ -5,7 +5,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.myrecipe.command.RecipeCommand;
+import com.example.myrecipe.converters.RecipeCommandToRecipe;
+import com.example.myrecipe.converters.RecipeToRecipeCommand;
 import com.example.myrecipe.domain.Recipe;
 import com.example.myrecipe.repositories.RecipeRepository;
 
@@ -13,11 +17,16 @@ import com.example.myrecipe.repositories.RecipeRepository;
 public class RecipeServiceImpl implements RecipeService {
 
 	private RecipeRepository recipeRepo;
+	private RecipeCommandToRecipe recipeCommandToRecipe;
+	private RecipeToRecipeCommand recipeToRecipeCommand;
 	
 	
-	public RecipeServiceImpl(RecipeRepository recipeRepo) {
-		
+	public RecipeServiceImpl(RecipeRepository recipeRepo, RecipeCommandToRecipe recipeCommandToRecipe,
+			RecipeToRecipeCommand recipeToRecipeCommand) {
+		super();
 		this.recipeRepo = recipeRepo;
+		this.recipeCommandToRecipe = recipeCommandToRecipe;
+		this.recipeToRecipeCommand = recipeToRecipeCommand;
 	}
 
 
@@ -36,6 +45,16 @@ public class RecipeServiceImpl implements RecipeService {
 		if(!recipeOptional.isPresent())
 			throw new RuntimeException("No recipe found!");
 		return recipeOptional.get();
+		
+	}
+
+
+	@Override
+	@Transactional
+	public RecipeCommand save(RecipeCommand recipeCommand) {
+		Recipe recipe = recipeCommandToRecipe.convert(recipeCommand);
+		Recipe newRecipe = recipeRepo.save(recipe);
+		return recipeToRecipeCommand.convert(newRecipe);
 		
 	}
 
