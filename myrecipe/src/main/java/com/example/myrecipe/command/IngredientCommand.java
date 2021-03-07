@@ -14,7 +14,7 @@ public class IngredientCommand {
 	private Long id;
 	private String description;
 	private BigDecimal amount;
-	private Recipe recipe;
+	private Long recipeId;
 	private UnitOfMeasureCommand uom;
 	
 	
@@ -39,11 +39,12 @@ public class IngredientCommand {
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-	public Recipe getRecipe() {
-		return recipe;
+	
+	public Long getRecipeId() {
+		return recipeId;
 	}
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
+	public void setRecipeId(Long recipeId) {
+		this.recipeId = recipeId;
 	}
 	public UnitOfMeasureCommand getUom() {
 		return uom;
