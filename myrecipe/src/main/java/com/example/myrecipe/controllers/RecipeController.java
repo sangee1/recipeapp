@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.myrecipe.command.RecipeCommand;
+import com.example.myrecipe.domain.Recipe;
 import com.example.myrecipe.service.RecipeService;
 
 @Controller
@@ -50,6 +51,11 @@ public class RecipeController {
 		return "recipe/recipeform";
 	}
 	
+	@RequestMapping("/recipe/{id}/delete")
+	public String deleteById(@PathVariable String id) {
+		recipeService.deleteById(Long.valueOf(id));
+		return "redirect:/";
+	}
 	
 
 }
