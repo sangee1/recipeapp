@@ -25,11 +25,13 @@ public class IngredientServiceImpl implements IngredientService {
 	Logger log = LoggerFactory.getLogger(getClass());
 	
 	public IngredientServiceImpl(RecipeRepository recipeRepo, UnitOfMeasureRepository uomRepo,
-			IngredientToIngredientCommand ingredientToIngredientCommand) {
+			IngredientToIngredientCommand ingredientToIngredientCommand,
+			IngredientCommandToIngredient ingredientCommandToIngredient) {
 		super();
 		this.recipeRepo = recipeRepo;
 		this.uomRepo = uomRepo;
 		this.ingredientToIngredientCommand = ingredientToIngredientCommand;
+		this.ingredientCommandToIngredient = ingredientCommandToIngredient;
 	}
 
 	@Override
@@ -58,7 +60,9 @@ public class IngredientServiceImpl implements IngredientService {
 		Optional<Recipe> recipeOptional = recipeRepo.findById(ingCommand.getRecipeId());
 		if(!recipeOptional.isPresent()) {
 			log.error("Recipe not found");
+			return new IngredientCommand();
 		}
+		else {
 		Recipe recipe = recipeOptional.get();
 		Optional<Ingredient> ingredientOptional = recipe.getIngredients().stream().filter(ing -> ing.getId().equals(ingCommand.getId())).findFirst();
 		
@@ -70,12 +74,22 @@ public class IngredientServiceImpl implements IngredientService {
 			ingredient.setUom(uomRepo.findById(ingCommand.getUom().getId()).get());
 		}
 		else {
-			recipe.getIngredients().add(ingredientCommandToIngredient.convert(ingCommand));
+			
+			Ingredient newIng = ingredientCommandToIngredient.convert(ingCommand);
+			newIng.setRecipe(recipe);
+			recipe.getIngredients().add(newIng);
 		}
 		Recipe savedRecipe = recipeRepo.save(recipe);
 		
-		return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().
-						stream().filter(ingredient -> ingCommand.getId().equals(ingredient.getId())).findFirst().get());
+		Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream().
+										filter(recipeIngredient -> recipeIngredient.getDescription().equals(ingCommand.getDescription())).
+										filter(recipeIngredient -> recipeIngredient.getAmount().equals(ingCommand.getAmount())).
+										filter(recipeIngredient -> recipeIngredient.getUom().getId().equals(ingCommand.getUom().getId())).
+										findFirst();
+		
+		
+		return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+		}
 		
 	}
 
