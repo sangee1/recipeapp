@@ -11,6 +11,7 @@ import com.example.myrecipe.command.RecipeCommand;
 import com.example.myrecipe.converters.RecipeCommandToRecipe;
 import com.example.myrecipe.converters.RecipeToRecipeCommand;
 import com.example.myrecipe.domain.Recipe;
+import com.example.myrecipe.exceptions.NotFoundException;
 import com.example.myrecipe.repositories.RecipeRepository;
 
 @Service
@@ -43,7 +44,8 @@ public class RecipeServiceImpl implements RecipeService {
 		// TODO Auto-generated method stub
 		Optional<Recipe> recipeOptional = recipeRepo.findById(l);
 		if(!recipeOptional.isPresent())
-			throw new RuntimeException("No recipe found!");
+			//throw new RuntimeException("No recipe found!");
+			throw new NotFoundException("No Recipe found");
 		return recipeOptional.get();
 		
 	}
